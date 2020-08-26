@@ -14,3 +14,16 @@ signInBtn.onclick = () => auth.signInWithPopup(provider);
 
 signOutBtn.onclick = () => auth.signOut();
 
+auth.onAuthStateChanged(user => {
+    if(user) {
+        // user signed in 
+        whenSignedIn.hidden = false;
+        whenSignedOut.hidden = true;
+        userDetails.innerHTML = `<h3>hello ${user.displayName}</h3>`
+    } else {
+        // user signed out  
+        whenSignedIn.hidden = true;
+        whenSignedOut.hidden = false;
+
+    }
+});
