@@ -34,21 +34,29 @@ auth.onAuthStateChanged(user => {
 
         createThing.onclick = () => {
             
-            const { serverTimeStamp } = firebase.firestore.FieldValue;
+            const { serverTimestamp } = firebase.firestore.FieldValue;
 
             thingsRef.add({
                 uid: user.uid,
                 name: 'Max',
+                createdAt: serverTimestamp()
             })
 
         }
+    
+        unsubscribe = thingsRef
+            .where('uid', '==', user.uid)
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(querySnapshot => {
 
+                const items = querySnapshot.docs.map(doc => {
+                    return `<li>${ doc.data().name }</li>`
+                });
+                thingList.innerHTML = items.join('');
+            });
     
     } else {
-        // user signed out  
-        whenSignedIn.hidden = true;
-        whenSignedOut.hidden = false;
-        userDetails.innerHTML = '';
+        unsubscribe && unsubscribe();
 
     }
 });
