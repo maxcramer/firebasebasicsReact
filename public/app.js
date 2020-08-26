@@ -1,4 +1,5 @@
 const auth = firebase.auth();
+const db = firebase.firestore();
 
 const whenSignedIn = document.getElementById('whenSignedIn');
 const whenSignedOut = document.getElementById('whenSignedOut');
@@ -10,6 +11,14 @@ const userDetails = document.getElementById('userDetails');
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
+const createThing = document.getElementById('createThings');
+const thingList = document.getElementById('thingsList');
+
+
+let thingsRef;
+let unsubscribe;
+
+
 signInBtn.onclick = () => auth.signInWithPopup(provider);
 
 signOutBtn.onclick = () => auth.signOut();
@@ -19,12 +28,31 @@ auth.onAuthStateChanged(user => {
         // user signed in 
         whenSignedIn.hidden = false;
         whenSignedOut.hidden = true;
-        userDetails.innerHTML = `<h3>hello ${user.displayName}</h3> <p>User ID: ${user.uid}</p> <img src="${user.photoURL}" alt="">
-        `
+        userDetails.innerHTML = `<h3>hello ${user.displayName}</h3> <p>User ID: ${user.uid}</p>`;
+        
+        thingsRef = db.collection('things');
+
+        createThing.onclick = () => {
+            
+            const { serverTimeStamp } = firebase.firestore.FieldValue;
+
+            thingsRef.add({
+                uid: user.uid,
+                name: 'Max',
+            })
+
+        }
+
+    
     } else {
         // user signed out  
         whenSignedIn.hidden = true;
         whenSignedOut.hidden = false;
+        userDetails.innerHTML = '';
 
     }
 });
+
+
+
+

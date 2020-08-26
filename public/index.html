@@ -10,7 +10,6 @@
 <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-firestore.js"></script>
 
-
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
@@ -26,12 +25,11 @@
     appId: "1:146143288423:web:ca28cd4cbe828d4f4a08c2"
   };
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig); 
 
 </script>
 
 <script src="app.js" defer></script>
-
 </head>
 <body>
 
@@ -52,6 +50,16 @@
         <button id="signOutBtn">
             Sign Out
         </button>
+
+    </section>
+
+    <section>
+
+        <ul id="thingsList">
+
+        </ul> 
+
+        <button id="createThings">Create Random Thing</button>
 
     </section>
     
